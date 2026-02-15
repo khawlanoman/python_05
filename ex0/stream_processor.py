@@ -25,7 +25,7 @@ class NumericProcessor(DataProcessor):
             len_data = len(data)
             sum_data = sum(data)
             avg_data = sum_data / len_data
-            return (f"Output: Processed {len_data} numeric "
+            return (f"Processed {len_data} numeric "
                     f"values, sum= {sum_data}, avg={avg_data:.1f}")
         except ValueError as e:
             return (f"ValueError:{e}")
@@ -44,7 +44,7 @@ class TextProcessor(DataProcessor):
         try:
             len_data = len(data)
             len_word_data = len(data.split(" "))
-            return (f"Output: Processed text: {len_data} "
+            return (f"Processed text: {len_data} "
                     f"characters, {len_word_data} words")
         except ValueError as e:
             return (f"ValueError:{e}")
@@ -87,7 +87,7 @@ if __name__ == "__main__":
         print(f"Processing data: {data_numeric}")
         valid = "Validation: Numeric data verified"
         print(numeric_processor.format_output(valid))
-        print(numeric_processor.process(data_numeric))
+        print("Output:", numeric_processor.process(data_numeric))
     else:
         print("Error : invalide data numeric")
 
@@ -95,13 +95,13 @@ if __name__ == "__main__":
         print("\nInitializing Text Processor...")
         print(f'Processing data: "{data_text}"')
         print(text_processor.format_output("Validation: Text data verified"))
-        print(text_processor.process(data_text))
+        print("Output:", text_processor.process(data_text))
     else:
         print("Error : invalide data text")
 
     if log_processor.validate(data_log):
         print("\nInitializing Log Processor...")
-        print(f"Processing data: {data_log}")
+        print(f'Processing data: "{data_log}"')
         print(log_processor.format_output("Validation: Log entry verified"))
         print(f"Output : {log_processor.process(data_log)}")
     else:

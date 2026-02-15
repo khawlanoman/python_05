@@ -43,7 +43,7 @@ class JSONAdapter(ProcessingPipeline):
 
     def process(self, data: Any) -> Any:
         print("Processing JSON data through pipeline...")
-        print(f"Input: {data}")
+        print(f"Input: {str(data).replace("'", '"')}")
         print("Transform: Enriched with metadata and validation")
         sum_data = 0
         len_data = 0
@@ -88,7 +88,7 @@ class NexusManager:
     def process(self, data: Any) -> str:
         for p_line in self.pipelines:
             p_line.process(data)
-        print("=== Pipeline Chaining Demo ===\n")
+        print("\n=== Pipeline Chaining Demo ===")
         print("Pipeline A -> Pipeline B -> Pipeline C")
         print("Data flow: Raw -> Processed -> Analyzed -> Stored\n")
         print("Chain result: 100 records processed through 3-stage pipeline")
@@ -108,11 +108,17 @@ if __name__ == "__main__":
 
     print("Creating Data Processing Pipeline...")
     InputStag = InputStage()
-    print(InputStag.process("stag1"))
+    filtered_input = InputStag.process("stag1")
+    filtered_stage = ",".join(filtered_input)
+    print(filtered_stage)
     TransformStage = TransformStage()
-    print(TransformStage.process("stage2"))
+    filtered_transform = TransformStage.process("stage2")
+    filtered_stage = ",".join(filtered_transform)
+    print(filtered_stage)
     Output = OutputStage()
-    print(Output.process("stage3"))
+    filtered_output = Output.process("stage3")
+    filtered_stage = ",".join(filtered_output)
+    print(filtered_stage)
 
     print("\n=== Multi-Format Data Processing ===\n")
     JSONAdapter = JSONAdapter("id1")
@@ -129,3 +135,5 @@ if __name__ == "__main__":
 
     NexusManager = NexusManager()
     NexusManager.process(data_str)
+
+    print("\nNexus Integration complete. All systems operational.")

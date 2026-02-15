@@ -37,11 +37,11 @@ class SensorStream(DataStream):
             self.len_data = len(self.data)
 
             data_buy = [value for key, value in
-                        self.data.items() if key == "buy"]
+                        self.data.items() if key == "temp"]
             avg_data = sum(data_buy) / len(data_buy) if data_buy else 0
 
             return (f"Sensor analysis: {self.len_data}"
-                    f"readings processed, avg buy: {avg_data:.1f}°C")
+                    f" readings processed, avg temp: {avg_data:.1f}°C")
         except Exception as e:
             print(f"error {e}")
 
@@ -96,7 +96,7 @@ class TransactionStream(DataStream):
                 units = "0"
 
             return (f"Transaction analysis: {len(self.data_batch)}"
-                    f"operations, net flow: {units} units")
+                    f" operations, net flow: {units} units")
         except Exception:
             print("error")
 
@@ -112,7 +112,7 @@ class TransactionStream(DataStream):
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
         len_data = len(self.data_t)
         dic = {"result": f"- Transaction data:"
-               f"{len_data} operations processed"}
+               f" {len_data} operations processed"}
         return (dic["result"])
 
 
@@ -134,7 +134,7 @@ class EventStream(DataStream):
                     count += 1
 
             return (f"Event analysis: {len(data_batch)}"
-                    f"events, {count} error detected")
+                    f" events, {count} error detected")
         except Exception:
             print("error")
 
@@ -168,9 +168,9 @@ if __name__ == "__main__":
 
     sensor_stream = SensorStream("SENSOR_001")
     print("Initializing Sensor Stream...")
-    list_data = ["buy:22.5", "humidity:65", "pressure:1013"]
+    list_data = ["temp:22.5", "humidity:65", "pressure:1013"]
     print(f"Stream ID: {sensor_stream.stream_id},"
-          f"type: {sensor_stream.stream_type}")
+          f" Type: {sensor_stream.stream_type}")
     filtered = sensor_stream.filter_data(list_data)
     filtered_str = "[" + ",".join(filtered) + "]"
     print(f"Processing sensor batch:{filtered_str}")
@@ -180,7 +180,7 @@ if __name__ == "__main__":
     list_data = ["buy:100", "sell:150", "buy:75"]
     print("\nInitializing Transaction Stream...")
     print(f"Stream ID: {transaction_stream.stream_id},"
-          f"type: {transaction_stream.stream_type}")
+          f" Type: {transaction_stream.stream_type}")
     filtered = transaction_stream.filter_data(list_data)
     filtered_str = "[" + ",".join(filtered) + "]"
     print(f"Processing transaction batch: {filtered_str}")
@@ -190,10 +190,10 @@ if __name__ == "__main__":
     list_data = ["login", "error", "logout"]
     print("\nInitializing Event Stream...")
     print(f"Stream ID: {event_stream.stream_id},"
-          f"type: {event_stream.stream_type}")
+          f" Type: {event_stream.stream_type}")
     filtered = event_stream.filter_data(list_data)
     filtered_str = "[" + ",".join(filtered) + "]"
-    print(f"Processing transaction batch: {filtered_str}")
+    print(f"Processing event batch: {filtered_str}")
     print(f"{event_stream.process_batch(list_data)}")
 
 
